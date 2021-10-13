@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import exchangeRoutes from './routes/exchange.js';
+import exchangeRoutes from './routes/exchangeRoute.js';
 
 const app = express();
 
