@@ -1,71 +1,71 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import Participant from '../models/participantModel.js';
+import Exchange from '../models/exchangeModel.js';
 
 const router = express.Router();
 
-export const getParticipants = async (req, res) => {
+export const getExchanges = async (req, res) => {
     try {
-        const participants = await Participant.find();
+        const exchanges = await Exchange.find();
 
-        res.status(200).json(participants);
+        res.status(200).json(exchanges);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
 
-export const getParticipant = async (req, res) => {
+export const getExchange = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const participant = await Participant.findById(id);
+        const exchange = await Exchange.findById(id);
 
-        res.status(200).json(participant);
+        res.status(200).json(exchange);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
 
-export const createParticipant = async (req, res) => {
-    const { name, email, exclusions, match } = req.body;
+export const createExchange = async (req, res) => {
+    const { name, participants, matches } = req.body;
 
-    const newParticipant = new Participant({ name, email, exclusions, match });
+    const newExchange = new Exchange({ name, participants, matches });
 
     try {
-        await newParticipant.save();
+        await newExchange.save();
 
-        res.status(200).json(newParticipant);
+        res.status(200).json(newExchange);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
 
 
-export const updateParticipant = async (req, res) => {
+export const updateExchange = async (req, res) => {
     const { id } = req.params;
-    const { name, email, exclusions, match } = req.body;
+    const { name, participants, matches } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No participant with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No exchange with id: ${id}`);
 
-    const updatedParticipant = { name, email, exclusions, match, _id: id };
+    const updatedExchange = { name, participants, matches, _id: id };
 
-    await Participant.findByIdAndUpdate(id, updatedParticipant, { new: true });
+    await Exchange.findByIdAndUpdate(id, updatedExchange, { new: true });
 
-    res.json(updatedParticipant);
+    res.json(updatedExchange);
 }
 
 
-export const deleteParticipant = async ( req, res) => {
+export const deleteExchange = async ( req, res) => {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No participant with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No exchange with id: ${id}`);
 
-    await Participant.findByIdAndRemove(id);
+    await Exchange.findByIdAndRemove(id);
 
-    res.json({ message: "Participant deleted successfully." });
+    res.json({ message: "Exchange deleted successfully." });
 }
 
 

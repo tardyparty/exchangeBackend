@@ -1,11 +1,10 @@
-import mongoose, { mongo } from 'mongoose';
-import Participant from './participantModel.js';
+import mongoose from 'mongoose';
 
 
 const exchangeSchema = mongoose.Schema({
     name: String,
     participants: {
-        type: [Participant],
+        type: [],
         default: undefined
     },
     matches: {
@@ -15,6 +14,6 @@ const exchangeSchema = mongoose.Schema({
 }, {timestamps: true});
 
 
-mongoose.model('exchange', exchangeSchema);
+const Exchange = mongoose.model('Exchange', exchangeSchema);
 
-module.exports = exchangeSchema;
+export default Exchange;

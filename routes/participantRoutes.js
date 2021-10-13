@@ -5,7 +5,7 @@ import {
     createParticipant,
     updateParticipant,
     deleteParticipant
-    } from '../controllers/exchangeController.js';
+    } from '../controllers/participantController.js';
 
 const router = express.Router();
 
